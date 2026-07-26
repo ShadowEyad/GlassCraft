@@ -272,7 +272,7 @@
             border-color: #ffffff;
         }
 
-        /* Stable Canvas Workspace Area */
+        /* Canvas Workspace Area */
         .canvas-area {
             background-size: cover;
             background-position: center;
@@ -413,7 +413,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Fixed-Height Strictly Consistent Code Export Section */
+        /* Strictly Consistent Code Export Section */
         .export-section {
             background: var(--bg-page);
             border: 1px solid var(--border-color);
@@ -532,9 +532,11 @@
             color: var(--text-tertiary);
         }
 
+        /* Mobile Layout Optimizations */
         @media (max-width: 940px) {
             .studio-grid {
                 grid-template-columns: 1fr;
+                margin-top: 16px;
             }
         }
 
@@ -542,35 +544,81 @@
             .container {
                 padding: 0 12px;
             }
+
             .panel {
                 padding: 16px;
                 border-radius: 12px;
             }
-            .canvas-area {
-                height: 300px;
-                padding: 12px;
+
+            .preset-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
             }
+
+            .canvas-area {
+                height: 260px;
+                padding: 10px;
+            }
+
+            .canvas-toolbar {
+                top: 6px;
+                right: 6px;
+                gap: 4px;
+            }
+
+            .mini-btn {
+                padding: 4px 6px;
+                font-size: 9px;
+            }
+
             .glass-card-preview {
                 width: 100%;
-                padding: 18px;
+                max-width: 280px;
+                padding: 16px;
             }
-            .preset-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px;
+
+            .glass-card-title {
+                font-size: 14px;
             }
-            .canvas-toolbar {
-                top: 8px;
-                right: 8px;
+
+            .glass-card-desc {
+                font-size: 11px;
+                margin-bottom: 12px;
             }
-            .mini-btn {
-                padding: 4px 8px;
+
+            .avatar-demo {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+
+            .code-tab {
+                font-size: 10px;
+                padding: 0 2px;
+            }
+
+            .tab-txt-full {
+                display: none;
+            }
+
+            .tab-txt-short {
+                display: inline;
+            }
+
+            .code-body {
+                padding: 0 10px;
+                gap: 8px;
+            }
+
+            .btn-copy {
+                padding: 6px 10px;
                 font-size: 10px;
             }
         }
 
-        @media (max-width: 380px) {
-            .preset-grid {
-                grid-template-columns: repeat(2, 1fr);
+        @media (min-width: 641px) {
+            .tab-txt-short {
+                display: none;
             }
         }
     </style>
@@ -698,10 +746,22 @@
                 <!-- Strictly Fixed-Height Code Export Section -->
                 <div class="export-section">
                     <div class="code-tabs">
-                        <button class="code-tab active" data-type="css">CSS Code</button>
-                        <button class="code-tab" data-type="tailwind">Tailwind CSS</button>
-                        <button class="code-tab" data-type="react">React / Next.js</button>
-                        <button class="code-tab" data-type="html">HTML Component</button>
+                        <button class="code-tab active" data-type="css">
+                            <span class="tab-txt-full">CSS Code</span>
+                            <span class="tab-txt-short">CSS</span>
+                        </button>
+                        <button class="code-tab" data-type="tailwind">
+                            <span class="tab-txt-full">Tailwind CSS</span>
+                            <span class="tab-txt-short">Tailwind</span>
+                        </button>
+                        <button class="code-tab" data-type="react">
+                            <span class="tab-txt-full">React / Next.js</span>
+                            <span class="tab-txt-short">React</span>
+                        </button>
+                        <button class="code-tab" data-type="html">
+                            <span class="tab-txt-full">HTML Component</span>
+                            <span class="tab-txt-short">HTML</span>
+                        </button>
                     </div>
                     <div class="code-body">
                         <code id="code-output">background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(16px);</code>
