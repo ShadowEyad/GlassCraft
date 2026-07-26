@@ -272,7 +272,7 @@
             border-color: #ffffff;
         }
 
-        /* Stable Canvas Workspace Area */
+        /* Canvas Workspace Area */
         .canvas-area {
             background-size: cover;
             background-position: center;
@@ -337,7 +337,7 @@
             background: var(--accent-primary);
         }
 
-        /* Stable Glass Card Preview */
+        /* Glass Card Preview */
         .glass-card-preview {
             width: 320px;
             max-width: 100%;
@@ -414,7 +414,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Export Code Section */
+        /* Clean Compact Code Export Box (Truncated with Ellipsis) */
         .export-section {
             background: var(--bg-page);
             border: 1px solid var(--border-color);
@@ -452,15 +452,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            gap: 12px;
             font-family: var(--font-mono);
             font-size: 12px;
             color: var(--text-primary);
+            overflow: hidden;
         }
 
         .code-body code {
-            overflow-x: auto;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
+            display: block;
+            max-width: 100%;
         }
 
         .btn-copy {
@@ -517,7 +522,6 @@
             color: var(--text-tertiary);
         }
 
-        /* Mobile Responsive Media Queries */
         @media (max-width: 940px) {
             .studio-grid {
                 grid-template-columns: 1fr;
@@ -587,7 +591,6 @@
                     <span class="panel-title">Glass Controls</span>
                 </div>
 
-                <!-- Presets -->
                 <div class="control-group">
                     <div class="label-row"><span>Glass Presets</span></div>
                     <div class="preset-grid">
@@ -600,7 +603,6 @@
                     </div>
                 </div>
 
-                <!-- Glass Tint Picker -->
                 <div class="control-group">
                     <div class="label-row"><span>Glass Tint</span></div>
                     <div class="tint-picker">
@@ -612,7 +614,6 @@
                     </div>
                 </div>
 
-                <!-- Blur Slider -->
                 <div class="control-group">
                     <div class="label-row">
                         <span>Blur Amount</span>
@@ -621,7 +622,6 @@
                     <input type="range" id="input-blur" class="range-slider" min="0" max="40" value="16">
                 </div>
 
-                <!-- Transparency Slider -->
                 <div class="control-group">
                     <div class="label-row">
                         <span>Opacity</span>
@@ -630,7 +630,6 @@
                     <input type="range" id="input-opacity" class="range-slider" min="0" max="100" value="15">
                 </div>
 
-                <!-- Border Width & Opacity -->
                 <div class="control-group">
                     <div class="label-row">
                         <span>Border Opacity</span>
@@ -639,7 +638,6 @@
                     <input type="range" id="input-border" class="range-slider" min="0" max="100" value="20">
                 </div>
 
-                <!-- Border Radius -->
                 <div class="control-group">
                     <div class="label-row">
                         <span>Border Radius</span>
@@ -648,7 +646,6 @@
                     <input type="range" id="input-radius" class="range-slider" min="0" max="40" value="16">
                 </div>
 
-                <!-- Shadow Elevation -->
                 <div class="control-group">
                     <div class="label-row">
                         <span>Shadow Elevation</span>
@@ -658,7 +655,7 @@
                 </div>
             </div>
 
-            <!-- Stable Preview Workspace -->
+            <!-- Preview Workspace -->
             <div class="panel">
                 <div class="panel-header">
                     <span class="panel-title">Live Preview</span>
@@ -672,7 +669,6 @@
                         <button class="mini-btn" data-bg="bg-aurora">Aurora</button>
                     </div>
 
-                    <!-- Stable Glass Card Preview -->
                     <div class="glass-card-preview" id="glass-preview-element">
                         <div class="glass-card-header">
                             <div class="avatar-demo">GC</div>
@@ -689,7 +685,7 @@
                     </div>
                 </div>
 
-                <!-- Export Section -->
+                <!-- Export Section with Truncated Compact Code Block -->
                 <div class="export-section">
                     <div class="code-tabs">
                         <button class="code-tab active" data-type="css">CSS Code</button>
@@ -733,7 +729,6 @@
         </div>
     </footer>
 
-    <!-- Stable Glass Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const blurInput = document.getElementById('input-blur');
