@@ -237,6 +237,7 @@
             cursor: pointer;
             transition: all 0.15s ease;
             text-align: center;
+            min-height: 40px;
         }
 
         .pill-btn:hover {
@@ -253,13 +254,13 @@
 
         .tint-picker {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             margin-top: 6px;
         }
 
         .tint-dot {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             border: 2px solid var(--border-color);
             cursor: pointer;
@@ -322,7 +323,7 @@
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            padding: 5px 10px;
+            padding: 6px 10px;
             border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
@@ -347,7 +348,7 @@
             z-index: 2;
             flex-shrink: 0;
             will-change: transform, backdrop-filter;
-            transform: translateZ(0); /* Hardware acceleration GPU layer */
+            transform: translateZ(0);
         }
 
         .glass-card-header {
@@ -433,7 +434,7 @@
             background: transparent;
             border: none;
             color: var(--text-tertiary);
-            padding: 10px 8px;
+            padding: 10px 6px;
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
@@ -516,6 +517,7 @@
             color: var(--text-tertiary);
         }
 
+        /* Mobile Responsive Media Queries */
         @media (max-width: 940px) {
             .studio-grid {
                 grid-template-columns: 1fr;
@@ -528,12 +530,33 @@
             }
             .panel {
                 padding: 16px;
+                border-radius: 12px;
+            }
+            .canvas-area {
+                height: 300px;
+                padding: 12px;
             }
             .glass-card-preview {
                 width: 100%;
+                padding: 18px;
             }
-            .canvas-area {
-                height: 320px;
+            .preset-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+            }
+            .canvas-toolbar {
+                top: 8px;
+                right: 8px;
+            }
+            .mini-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .preset-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -752,7 +775,6 @@
                 valRadius.textContent = `${radius}px`;
                 valShadow.textContent = `${shadow}px`;
 
-                // Stable Style Application
                 const bgRgba = `rgba(${tintR}, ${tintG}, ${tintB}, ${opacity})`;
                 const borderRgba = `rgba(${tintR}, ${tintG}, ${tintB}, ${borderOpacity})`;
                 const blurPx = `${blur}px`;
@@ -766,7 +788,6 @@
                 glassPreview.style.borderRadius = `${radius}px`;
                 glassPreview.style.boxShadow = shadow > 0 ? `0 10px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity})` : 'none';
 
-                // Code Outputs
                 if (currentType === 'css') {
                     codeOutput.textContent = `background: ${bgRgba}; backdrop-filter: blur(${blurPx}); -webkit-backdrop-filter: blur(${blurPx}); border: 1px solid ${borderRgba}; border-radius: ${radius}px; box-shadow: 0 10px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity});`;
                 } else if (currentType === 'tailwind') {
@@ -783,7 +804,6 @@
                 inp.addEventListener('input', updateGlass);
             });
 
-            // Tint Picker
             tintDots.forEach(dot => {
                 dot.addEventListener('click', () => {
                     tintDots.forEach(d => d.classList.remove('active'));
@@ -795,7 +815,6 @@
                 });
             });
 
-            // Presets
             document.getElementById('preset-frosted').addEventListener('click', () => {
                 tintR = 255; tintG = 255; tintB = 255;
                 blurInput.value = 16; opacityInput.value = 15; borderInput.value = 20; radiusInput.value = 16; shadowInput.value = 25;
@@ -827,7 +846,6 @@
                 updateGlass();
             });
 
-            // Background Switcher
             bgBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     bgBtns.forEach(b => b.classList.remove('active'));
