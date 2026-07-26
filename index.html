@@ -272,7 +272,7 @@
             border-color: #ffffff;
         }
 
-        /* Canvas Workspace Area */
+        /* Stable Canvas Workspace Area */
         .canvas-area {
             background-size: cover;
             background-position: center;
@@ -337,7 +337,6 @@
             background: var(--accent-primary);
         }
 
-        /* Glass Card Preview */
         .glass-card-preview {
             width: 320px;
             max-width: 100%;
@@ -414,19 +413,25 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Clean Compact Code Export Box (Truncated with Ellipsis) */
+        /* Fixed-Height Strictly Consistent Code Export Section */
         .export-section {
             background: var(--bg-page);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-inner);
             overflow: hidden;
             margin-top: 16px;
+            height: 92px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
         }
 
         .code-tabs {
             display: flex;
             border-bottom: 1px solid var(--border-color);
             background: var(--bg-surface);
+            height: 38px;
+            flex-shrink: 0;
         }
 
         .code-tab {
@@ -434,11 +439,14 @@
             background: transparent;
             border: none;
             color: var(--text-tertiary);
-            padding: 10px 6px;
+            padding: 0 6px;
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .code-tab.active {
@@ -448,7 +456,8 @@
         }
 
         .code-body {
-            padding: 12px;
+            height: 54px;
+            padding: 0 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -457,6 +466,7 @@
             font-size: 12px;
             color: var(--text-primary);
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .code-body code {
@@ -472,7 +482,7 @@
             background: var(--accent-primary);
             border: none;
             color: #fff;
-            padding: 8px 14px;
+            padding: 7px 14px;
             border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
@@ -685,7 +695,7 @@
                     </div>
                 </div>
 
-                <!-- Export Section with Truncated Compact Code Block -->
+                <!-- Strictly Fixed-Height Code Export Section -->
                 <div class="export-section">
                     <div class="code-tabs">
                         <button class="code-tab active" data-type="css">CSS Code</button>
