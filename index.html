@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GlassCraft — CSS Glassmorphism & Shadow Generator</title>
     <meta name="description" content="Free online CSS glassmorphism generator, backdrop-filter blur tool, and Tailwind CSS code exporter for web designers and developers.">
     <meta name="keywords" content="glassmorphism generator, css glassmorphism, backdrop-filter blur, tailwind glassmorphism, css box shadow generator, ui glass card">
@@ -86,6 +86,11 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
         }
 
         body {
@@ -286,6 +291,7 @@
             overflow: hidden;
             padding: 20px;
             transition: background 0.3s ease;
+            width: 100%;
         }
 
         .bg-mesh {
@@ -413,17 +419,17 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Strictly Consistent Code Export Section */
+        /* Desktop Export Code Section */
         .export-section {
             background: var(--bg-page);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-inner);
             overflow: hidden;
             margin-top: 16px;
-            height: 92px;
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
+            width: 100%;
         }
 
         .code-tabs {
@@ -456,8 +462,8 @@
         }
 
         .code-body {
-            height: 54px;
-            padding: 0 14px;
+            min-height: 54px;
+            padding: 12px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -466,13 +472,11 @@
             font-size: 12px;
             color: var(--text-primary);
             overflow: hidden;
-            flex-shrink: 0;
         }
 
         .code-body code {
             flex: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            overflow-x: auto;
             white-space: nowrap;
             display: block;
             max-width: 100%;
@@ -482,7 +486,7 @@
             background: var(--accent-primary);
             border: none;
             color: #fff;
-            padding: 7px 14px;
+            padding: 8px 14px;
             border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
@@ -532,21 +536,22 @@
             color: var(--text-tertiary);
         }
 
-        /* Mobile Layout Optimizations */
+        /* Complete Mobile Layout Refinement */
         @media (max-width: 940px) {
             .studio-grid {
                 grid-template-columns: 1fr;
                 margin-top: 16px;
+                gap: 16px;
             }
         }
 
         @media (max-width: 640px) {
             .container {
-                padding: 0 12px;
+                padding: 0 10px;
             }
 
             .panel {
-                padding: 16px;
+                padding: 14px;
                 border-radius: 12px;
             }
 
@@ -555,8 +560,14 @@
                 gap: 6px;
             }
 
+            .pill-btn {
+                font-size: 11px;
+                padding: 8px 4px;
+                min-height: 36px;
+            }
+
             .canvas-area {
-                height: 260px;
+                height: 250px;
                 padding: 10px;
             }
 
@@ -573,23 +584,47 @@
 
             .glass-card-preview {
                 width: 100%;
-                max-width: 280px;
-                padding: 16px;
+                max-width: 270px;
+                padding: 14px;
+                border-radius: 12px;
+            }
+
+            .glass-card-header {
+                gap: 8px;
+                margin-bottom: 10px;
             }
 
             .glass-card-title {
-                font-size: 14px;
+                font-size: 13px;
+            }
+
+            .glass-card-sub {
+                font-size: 10px;
             }
 
             .glass-card-desc {
                 font-size: 11px;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
+                line-height: 1.35;
+            }
+
+            .glass-card-btn {
+                padding: 6px 8px;
+                font-size: 10px;
             }
 
             .avatar-demo {
-                width: 32px;
-                height: 32px;
-                font-size: 12px;
+                width: 30px;
+                height: 30px;
+                font-size: 11px;
+            }
+
+            .export-section {
+                margin-top: 12px;
+            }
+
+            .code-tabs {
+                height: 34px;
             }
 
             .code-tab {
@@ -606,13 +641,28 @@
             }
 
             .code-body {
-                padding: 0 10px;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 10px;
                 gap: 8px;
             }
 
+            .code-body code {
+                font-size: 11px;
+                background: rgba(0, 0, 0, 0.25);
+                padding: 8px;
+                border-radius: 6px;
+                white-space: pre-wrap;
+                word-break: break-all;
+                max-height: 64px;
+                overflow-y: auto;
+            }
+
             .btn-copy {
-                padding: 6px 10px;
-                font-size: 10px;
+                width: 100%;
+                text-align: center;
+                padding: 8px 0;
+                font-size: 11px;
             }
         }
 
@@ -743,7 +793,7 @@
                     </div>
                 </div>
 
-                <!-- Strictly Fixed-Height Code Export Section -->
+                <!-- Export Code Section -->
                 <div class="export-section">
                     <div class="code-tabs">
                         <button class="code-tab active" data-type="css">
