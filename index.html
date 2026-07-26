@@ -26,7 +26,7 @@
     <meta name="twitter:description" content="Design glassmorphism UI cards and export clean CSS/Tailwind code.">
     <meta name="twitter:image" content="logo.png">
 
-    <!-- JSON-LD Structured Data for Google SEO -->
+    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -44,7 +44,6 @@
     }
     </script>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
 
     <style>
@@ -108,7 +107,6 @@
             width: 100%;
         }
 
-        /* Top Header Bar */
         header {
             height: 60px;
             border-bottom: 1px solid var(--border-color);
@@ -170,7 +168,6 @@
             color: var(--text-primary);
         }
 
-        /* Studio Grid Layout */
         .studio-grid {
             display: grid;
             grid-template-columns: 440px 1fr;
@@ -254,23 +251,42 @@
             color: #ffffff;
         }
 
-        /* Canvas Workspace Area */
+        .tint-picker {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .tint-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+
+        .tint-dot:hover, .tint-dot.active {
+            transform: scale(1.15);
+            border-color: #ffffff;
+        }
+
+        /* Stable Canvas Workspace Area */
         .canvas-area {
             background-size: cover;
             background-position: center;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-inner);
-            height: 380px;
+            height: 420px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
-            padding: 24px;
+            padding: 20px;
             transition: background 0.3s ease;
         }
 
-        /* Canvas Background Presets */
         .bg-mesh {
             background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
                         radial-gradient(at 50% 0%, hsla(225,39%,25%,1) 0, transparent 50%), 
@@ -287,6 +303,10 @@
 
         .bg-cyber {
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+        }
+
+        .bg-aurora {
+            background: linear-gradient(135deg, #064e3b 0%, #0284c7 50%, #4c1d95 100%);
         }
 
         .canvas-toolbar {
@@ -316,43 +336,84 @@
             background: var(--accent-primary);
         }
 
-        /* Glass Card Preview */
+        /* Stable Glass Card Preview */
         .glass-card-preview {
             width: 320px;
-            padding: 28px;
+            max-width: 100%;
+            padding: 24px;
             border-radius: 16px;
             color: #ffffff;
-            transition: all 0.15s ease;
             position: relative;
             z-index: 2;
+            flex-shrink: 0;
+            will-change: transform, backdrop-filter;
+            transform: translateZ(0); /* Hardware acceleration GPU layer */
+        }
+
+        .glass-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .avatar-demo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .glass-card-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
-            margin-bottom: 6px;
             letter-spacing: -0.3px;
+        }
+
+        .glass-card-sub {
+            font-size: 12px;
+            opacity: 0.75;
         }
 
         .glass-card-desc {
             font-size: 13px;
-            opacity: 0.8;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            opacity: 0.85;
+            margin-bottom: 18px;
+            line-height: 1.45;
+        }
+
+        .glass-card-actions {
+            display: flex;
+            gap: 8px;
         }
 
         .glass-card-btn {
+            flex: 1;
             background: #ffffff;
             color: #0f172a;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 12px;
             border-radius: 8px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
+            text-align: center;
         }
 
-        /* Code Export Box */
+        .glass-card-btn.sec {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Export Code Section */
         .export-section {
             background: var(--bg-page);
             border: 1px solid var(--border-color);
@@ -471,12 +532,14 @@
             .glass-card-preview {
                 width: 100%;
             }
+            .canvas-area {
+                height: 320px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <div class="container header-content">
             <a href="#" class="brand">
@@ -511,6 +574,18 @@
                         <button class="pill-btn" id="preset-crystal">Crystal</button>
                         <button class="pill-btn" id="preset-liquid">Liquid</button>
                         <button class="pill-btn" id="preset-soft">Soft Glass</button>
+                    </div>
+                </div>
+
+                <!-- Glass Tint Picker -->
+                <div class="control-group">
+                    <div class="label-row"><span>Glass Tint</span></div>
+                    <div class="tint-picker">
+                        <div class="tint-dot active" data-r="255" data-g="255" data-b="255" style="background: #ffffff;" title="White Glass"></div>
+                        <div class="tint-dot" data-r="15" data-g="23" data-b="42" style="background: #0f172a;" title="Dark Slate Glass"></div>
+                        <div class="tint-dot" data-r="99" data-g="102" data-b="241" style="background: #6366f1;" title="Indigo Glass"></div>
+                        <div class="tint-dot" data-r="6" data-g="182" data-b="212" style="background: #06b6d4;" title="Cyan Glass"></div>
+                        <div class="tint-dot" data-r="236" data-g="72" data-b="153" style="background: #ec4899;" title="Pink Glass"></div>
                     </div>
                 </div>
 
@@ -560,7 +635,7 @@
                 </div>
             </div>
 
-            <!-- Preview Workspace -->
+            <!-- Stable Preview Workspace -->
             <div class="panel">
                 <div class="panel-header">
                     <span class="panel-title">Live Preview</span>
@@ -571,13 +646,23 @@
                         <button class="mini-btn active" data-bg="bg-mesh">Mesh</button>
                         <button class="mini-btn" data-bg="bg-grid">Grid</button>
                         <button class="mini-btn" data-bg="bg-cyber">Cyber</button>
+                        <button class="mini-btn" data-bg="bg-aurora">Aurora</button>
                     </div>
 
-                    <!-- Live Glass Preview Card -->
+                    <!-- Stable Glass Card Preview -->
                     <div class="glass-card-preview" id="glass-preview-element">
-                        <div class="glass-card-title">Glassmorphism UI</div>
-                        <p class="glass-card-desc">Adjust the controls on the left to customize blur, border, opacity, and box-shadow in real-time.</p>
-                        <button class="glass-card-btn">Action Button</button>
+                        <div class="glass-card-header">
+                            <div class="avatar-demo">GC</div>
+                            <div>
+                                <div class="glass-card-title">Glassmorphism UI</div>
+                                <div class="glass-card-sub">Real-Time CSS Render</div>
+                            </div>
+                        </div>
+                        <p class="glass-card-desc">Adjust the controls on the left to customize blur, border, tint, and box-shadow in real-time.</p>
+                        <div class="glass-card-actions">
+                            <button class="glass-card-btn">Primary Action</button>
+                            <button class="glass-card-btn sec">Secondary</button>
+                        </div>
                     </div>
                 </div>
 
@@ -586,7 +671,8 @@
                     <div class="code-tabs">
                         <button class="code-tab active" data-type="css">CSS Code</button>
                         <button class="code-tab" data-type="tailwind">Tailwind CSS</button>
-                        <button class="code-tab" data-type="html">HTML Snippet</button>
+                        <button class="code-tab" data-type="react">React / Next.js</button>
+                        <button class="code-tab" data-type="html">HTML Component</button>
                     </div>
                     <div class="code-body">
                         <code id="code-output">background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(16px);</code>
@@ -597,7 +683,6 @@
 
         </div>
 
-        <!-- FAQ Accordion Section -->
         <section class="faq-section">
             <h2 class="faq-title">Frequently Asked Questions</h2>
             
@@ -625,7 +710,7 @@
         </div>
     </footer>
 
-    <!-- Glass Logic -->
+    <!-- Stable Glass Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const blurInput = document.getElementById('input-blur');
@@ -646,69 +731,98 @@
             const copyBtn = document.getElementById('copy-btn');
             const codeTabs = document.querySelectorAll('.code-tab');
             const bgBtns = document.querySelectorAll('.mini-btn[data-bg]');
+            const tintDots = document.querySelectorAll('.tint-dot');
             const themeToggle = document.getElementById('theme-toggle');
 
+            let tintR = 255, tintG = 255, tintB = 255;
             let currentType = 'css';
 
             function updateGlass() {
-                const blur = blurInput.value;
-                const opacity = (opacityInput.value / 100).toFixed(2);
-                const borderOpacity = (borderInput.value / 100).toFixed(2);
-                const radius = radiusInput.value;
-                const shadow = shadowInput.value;
+                const blur = parseInt(blurInput.value) || 0;
+                const opacityVal = parseInt(opacityInput.value) || 0;
+                const opacity = (opacityVal / 100).toFixed(2);
+                const borderVal = parseInt(borderInput.value) || 0;
+                const borderOpacity = (borderVal / 100).toFixed(2);
+                const radius = parseInt(radiusInput.value) || 0;
+                const shadow = parseInt(shadowInput.value) || 0;
 
                 valBlur.textContent = `${blur}px`;
-                valOpacity.textContent = `${opacityInput.value}%`;
-                valBorder.textContent = `${borderInput.value}%`;
+                valOpacity.textContent = `${opacityVal}%`;
+                valBorder.textContent = `${borderVal}%`;
                 valRadius.textContent = `${radius}px`;
                 valShadow.textContent = `${shadow}px`;
 
-                // Apply inline styles to preview card
-                glassPreview.style.background = `rgba(255, 255, 255, ${opacity})`;
-                glassPreview.style.backdropFilter = `blur(${blur}px)`;
-                glassPreview.style.webkitBackdropFilter = `blur(${blur}px)`;
-                glassPreview.style.border = `1px solid rgba(255, 255, 255, ${borderOpacity})`;
-                glassPreview.style.borderRadius = `${radius}px`;
-                glassPreview.style.boxShadow = `0 10px ${shadow}px rgba(0, 0, 0, ${Math.min(0.5, shadow / 80)})`;
+                // Stable Style Application
+                const bgRgba = `rgba(${tintR}, ${tintG}, ${tintB}, ${opacity})`;
+                const borderRgba = `rgba(${tintR}, ${tintG}, ${tintB}, ${borderOpacity})`;
+                const blurPx = `${blur}px`;
+                const shadowBlur = Math.round(shadow * 1.2);
+                const shadowOpacity = (Math.min(0.4, shadow / 100)).toFixed(2);
 
-                // Generate code outputs
+                glassPreview.style.background = bgRgba;
+                glassPreview.style.backdropFilter = `blur(${blurPx})`;
+                glassPreview.style.webkitBackdropFilter = `blur(${blurPx})`;
+                glassPreview.style.border = `1px solid ${borderRgba}`;
+                glassPreview.style.borderRadius = `${radius}px`;
+                glassPreview.style.boxShadow = shadow > 0 ? `0 10px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity})` : 'none';
+
+                // Code Outputs
                 if (currentType === 'css') {
-                    codeOutput.textContent = `background: rgba(255, 255, 255, ${opacity}); backdrop-filter: blur(${blur}px); -webkit-backdrop-filter: blur(${blur}px); border: 1px solid rgba(255, 255, 255, ${borderOpacity}); border-radius: ${radius}px; box-shadow: 0 10px ${shadow}px rgba(0, 0, 0, 0.25);`;
+                    codeOutput.textContent = `background: ${bgRgba}; backdrop-filter: blur(${blurPx}); -webkit-backdrop-filter: blur(${blurPx}); border: 1px solid ${borderRgba}; border-radius: ${radius}px; box-shadow: 0 10px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity});`;
                 } else if (currentType === 'tailwind') {
-                    const blurClass = blur > 20 ? 'backdrop-blur-xl' : blur > 10 ? 'backdrop-blur-md' : 'backdrop-blur-sm';
-                    codeOutput.textContent = `class="bg-white/${Math.round(opacityInput.value)} ${blurClass} border border-white/${Math.round(borderInput.value)} rounded-[${radius}px] shadow-2xl"`;
+                    const blurClass = blur > 24 ? 'backdrop-blur-2xl' : blur > 16 ? 'backdrop-blur-xl' : blur > 8 ? 'backdrop-blur-md' : 'backdrop-blur-sm';
+                    codeOutput.textContent = `class="bg-white/${opacityVal} ${blurClass} border border-white/${borderVal} rounded-[${radius}px] shadow-2xl"`;
+                } else if (currentType === 'react') {
+                    codeOutput.textContent = `<div style={{ background: '${bgRgba}', backdropFilter: 'blur(${blurPx})', borderRadius: '${radius}px' }}>...</div>`;
                 } else if (currentType === 'html') {
-                    codeOutput.textContent = `<div class="glass-card">\n  <h2>Glassmorphism Title</h2>\n</div>`;
+                    codeOutput.textContent = `<div class="glass-card">\n  <h2>Glassmorphism UI</h2>\n</div>`;
                 }
             }
 
-            // Sliders Events
             [blurInput, opacityInput, borderInput, radiusInput, shadowInput].forEach(inp => {
                 inp.addEventListener('input', updateGlass);
             });
 
+            // Tint Picker
+            tintDots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    tintDots.forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    tintR = parseInt(dot.dataset.r);
+                    tintG = parseInt(dot.dataset.g);
+                    tintB = parseInt(dot.dataset.b);
+                    updateGlass();
+                });
+            });
+
             // Presets
             document.getElementById('preset-frosted').addEventListener('click', () => {
+                tintR = 255; tintG = 255; tintB = 255;
                 blurInput.value = 16; opacityInput.value = 15; borderInput.value = 20; radiusInput.value = 16; shadowInput.value = 25;
                 updateGlass();
             });
             document.getElementById('preset-dark').addEventListener('click', () => {
-                blurInput.value = 24; opacityInput.value = 5; borderInput.value = 10; radiusInput.value = 20; shadowInput.value = 35;
+                tintR = 15; tintG = 23; tintB = 42;
+                blurInput.value = 24; opacityInput.value = 35; borderInput.value = 15; radiusInput.value = 20; shadowInput.value = 35;
                 updateGlass();
             });
             document.getElementById('preset-neon').addEventListener('click', () => {
-                blurInput.value = 12; opacityInput.value = 25; borderInput.value = 40; radiusInput.value = 12; shadowInput.value = 45;
+                tintR = 99; tintG = 102; tintB = 241;
+                blurInput.value = 14; opacityInput.value = 25; borderInput.value = 40; radiusInput.value = 16; shadowInput.value = 45;
                 updateGlass();
             });
             document.getElementById('preset-crystal').addEventListener('click', () => {
+                tintR = 255; tintG = 255; tintB = 255;
                 blurInput.value = 30; opacityInput.value = 8; borderInput.value = 35; radiusInput.value = 8; shadowInput.value = 15;
                 updateGlass();
             });
             document.getElementById('preset-liquid').addEventListener('click', () => {
-                blurInput.value = 36; opacityInput.value = 20; borderInput.value = 15; radiusInput.value = 28; shadowInput.value = 30;
+                tintR = 6; tintG = 182; tintB = 212;
+                blurInput.value = 36; opacityInput.value = 20; borderInput.value = 25; radiusInput.value = 24; shadowInput.value = 30;
                 updateGlass();
             });
             document.getElementById('preset-soft').addEventListener('click', () => {
+                tintR = 255; tintG = 255; tintB = 255;
                 blurInput.value = 8; opacityInput.value = 30; borderInput.value = 15; radiusInput.value = 16; shadowInput.value = 20;
                 updateGlass();
             });
@@ -722,7 +836,6 @@
                 });
             });
 
-            // Code Tab switching
             codeTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     codeTabs.forEach(t => t.classList.remove('active'));
@@ -732,7 +845,6 @@
                 });
             });
 
-            // Copy Code
             copyBtn.addEventListener('click', () => {
                 navigator.clipboard.writeText(codeOutput.textContent).then(() => {
                     copyBtn.textContent = 'Copied!';
